@@ -39,7 +39,16 @@ struct fixed_point32_t {
   fixed_point32_t() = delete;
 
   constexpr fixed_point32_t operator+(const fixed_point32_t other) const {
-    return fixed_point32_t{num_ + other.num_};
+    return fixed_point32_t<fractional_digits>{num_ + other.num_};
+  }
+
+  constexpr fixed_point32_t operator+(const int other) const {
+    return fixed_point32_t<fractional_digits>{num_ + other * pow10(fractional_digits)};
+  }
+
+  constexpr fixed_point32_t& operator++() {
+    this->num_ += pow10(fractional_digits);
+    return *this;
   }
   
   template <uint8_t other_fractional_digits>

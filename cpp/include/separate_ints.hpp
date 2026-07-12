@@ -23,8 +23,25 @@ struct fixed_point32_t {
   fixed_point32_t() = delete;
 
   constexpr fixed_point32_t operator+(const fixed_point32_t other) const {
-    uint16_t new_whole {static_cast<uint16_t>(whole_ + other.whole_ + (frac_ + other.frac_ < 10000 ? 1 : 0))};
-    return {new_whole, static_cast<uint16_t>((frac_ + other.frac_) % 10000)};
+    uint32_t frac = frac_ + other.frac_;
+    uint16_t carry = frac >= 10000;
+
+    return {
+        static_cast<uint16_t>(whole_ + other.whole_ + carry),
+        static_cast<uint16_t>(carry ? frac - 10000 : frac)
+    };
+  }
+
+  constexpr fixed_point32_t operator+(const int other) const {
+    return {
+      static_cast<uint16_t>(whole_ + other),
+      frac_
+    };
+  }
+
+  fixed_point32_t& operator++() {
+    this->whole_++;
+    return *this;
   }
 
   friend std::ostream& operator<<(std::ostream& os, const fixed_point32_t fp32) {

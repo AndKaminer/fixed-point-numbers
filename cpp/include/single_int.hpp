@@ -18,6 +18,15 @@ struct fixed_point32_t {
     return fixed_point32_t{num_ + other.num_};
   }
 
+  fixed_point32_t& operator++() {
+    this->num_ += 10000;
+    return *this;
+  }
+
+  constexpr fixed_point32_t operator+(int other) {
+    return fixed_point32_t(num_ + other * 10000);
+  }
+
   friend std::ostream& operator<<(std::ostream& os, const fixed_point32_t fp32) {
     os << fp32.num_ / 10000 << "." << (fp32.num_ % 10000);
     return os;
