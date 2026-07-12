@@ -14,6 +14,9 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_subdirectory(cpp/third_party/benchmark)
 
 add_executable(addition_benchmark cpp/benchmarks/addition.cpp)
-
 target_include_directories(addition_benchmark PRIVATE cpp/include)
 target_link_libraries(addition_benchmark PRIVATE benchmark::benchmark)
+
+add_executable(vector_benchmark cpp/benchmarks/vector.cpp)
+target_include_directories(vector_benchmark PRIVATE cpp/include)
+target_link_libraries(vector_benchmark PRIVATE benchmark::benchmark)

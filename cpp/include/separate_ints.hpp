@@ -20,7 +20,7 @@ struct fixed_point32_t {
     frac_ = frac;
   }
   
-  fixed_point32_t() = delete;
+  constexpr fixed_point32_t() = default;
 
   constexpr fixed_point32_t operator+(const fixed_point32_t other) const {
     uint32_t frac = frac_ + other.frac_;

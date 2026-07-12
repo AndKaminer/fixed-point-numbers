@@ -12,7 +12,7 @@ struct fixed_point32_t {
 
   constexpr explicit fixed_point32_t(uint32_t num) : num_(num) {}
   
-  fixed_point32_t() = delete;
+  constexpr fixed_point32_t() = default;
 
   constexpr fixed_point32_t operator+(const fixed_point32_t other) const {
     return fixed_point32_t{num_ + other.num_};
