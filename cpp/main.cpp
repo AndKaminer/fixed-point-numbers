@@ -16,7 +16,7 @@ int main() {
   std::cout << d * e << std::endl;
 
 
-  scaled_int::fixed_point32_t<3> g {100, 725};
+  scaled_int::fixed_point32_t<4> g {100, 725};
   scaled_int::fixed_point32_t<4> h {532, 3802};
   std::cout << h + g << std::endl;
   std::cout << h * g << std::endl;

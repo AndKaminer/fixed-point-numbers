@@ -53,12 +53,6 @@ struct fixed_point32_t {
     return *this;
   }
   
-  template <uint8_t other_fractional_digits>
-  constexpr operator fixed_point32_t<other_fractional_digits>() const {
-    static_assert(other_fractional_digits >= fractional_digits, "Error: Precision demotion bad.");
-    return fixed_point32_t<other_fractional_digits>(num_ * pow10(other_fractional_digits - fractional_digits));
-  }
-
   friend std::ostream& operator<<(std::ostream& os, const fixed_point32_t fp32) {
     os << fp32.num_ / pow10(fractional_digits) << "." << (fp32.num_ % pow10(fractional_digits));
     return os;

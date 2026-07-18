@@ -47,20 +47,6 @@ void BM_Scaled(benchmark::State& state) {
   }
 }
 
-void BM_Scaled_Promotion(benchmark::State& state) {
-  scaled_int::fixed_point32_t<3> a {100, 725};
-  scaled_int::fixed_point32_t<4> b {532, 3802};
-  for (auto _ : state) {
-    benchmark::DoNotOptimize(a);
-    benchmark::DoNotOptimize(b);
-
-    auto c = b + a;
-
-    benchmark::DoNotOptimize(c);
-    ++a;
-  }
-}
-
 void BM_Integer(benchmark::State& state) {
   uint32_t a {100725};
   uint32_t b {5323802};
@@ -94,6 +80,5 @@ BENCHMARK(BM_Float);
 BENCHMARK(BM_Separate);
 BENCHMARK(BM_Merged);
 BENCHMARK(BM_Scaled);
-BENCHMARK(BM_Scaled_Promotion);
 
 BENCHMARK_MAIN();
