@@ -39,6 +39,17 @@ struct fixed_point32_t {
     };
   }
 
+  constexpr fixed_point32_t operator*(const fixed_point32_t other) const {
+    uint32_t a {static_cast<uint32_t>(whole_ * other.whole_)};
+    uint32_t b {static_cast<uint32_t>(whole_ * other.frac_)};
+    uint32_t c {static_cast<uint32_t>(frac_ * other.whole_)};
+    uint32_t d {static_cast<uint32_t>(frac_ * other.frac_)}; // 10000 * 10000
+    return { 
+      static_cast<uint16_t>(a + (b / 10000) + (c / 10000) + (d / 100000000)),
+      static_cast<uint16_t>((b % 10000) + (c % 10000) + (d % 100000000))
+    };
+  }
+
   fixed_point32_t& operator++() {
     this->whole_++;
     return *this;
