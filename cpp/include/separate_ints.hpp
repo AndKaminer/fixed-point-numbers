@@ -78,6 +78,19 @@ struct fixed_point32_t {
     };
   }
 
+  constexpr fixed_point32_t operator/(const fixed_point32_t other) const {
+    // (a1 + a2 / 10000) / (b1 + b2 / 10000)
+    // = a1 / (b1 + b2 / 10000) + a2 / (b1 + b2 / 10000)
+    // = 10000 * a1 / (10000 * b1 + b2) + ...
+    uint64_t numer {(static_cast<uint64_t>(10000) * whole_ + frac_) * 10000};
+    uint32_t denom {static_cast<uint32_t>(10000) * other.whole_ + other.frac_};
+    uint32_t out {static_cast<uint32_t>(numer / denom)};
+    return {
+      static_cast<uint16_t>(out / 10000),
+      static_cast<uint16_t>(out % 10000)
+    };
+  }
+
   fixed_point32_t& operator++() {
     this->whole_++;
     return *this;

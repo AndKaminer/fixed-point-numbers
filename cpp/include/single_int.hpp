@@ -26,6 +26,10 @@ struct fixed_point32_t {
     return fixed_point32_t{static_cast<uint32_t>((static_cast<uint64_t>(num_) * static_cast<uint64_t>(other.num_)) / 10000)};
   }
 
+  constexpr fixed_point32_t operator/(const fixed_point32_t other) const {
+    return fixed_point32_t{static_cast<uint32_t>(static_cast<uint64_t>(num_) * 10000 / static_cast<uint64_t>(other.num_))};
+  }
+
   fixed_point32_t& operator++() {
     this->num_ += 10000;
     return *this;
