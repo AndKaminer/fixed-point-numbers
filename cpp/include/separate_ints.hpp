@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <cstdint>
 #include <ostream>
 
@@ -32,11 +33,38 @@ struct fixed_point32_t {
     };
   }
 
+  constexpr fixed_point32_t operator-(const fixed_point32_t other) const {
+    const uint16_t frac_diff {static_cast<uint16_t>(std::max(frac_, other.frac_) - std::min(frac_, other.frac_))};
+    return {
+      static_cast<uint16_t>(whole_ - other.whole_ - (frac_ >= other.frac_ ? 0 : 1)),
+      static_cast<uint16_t>(frac_ >= other.frac_ ? frac_diff : 10000 - frac_diff)};
+  }
+
   constexpr fixed_point32_t operator+(const int other) const {
     return {
       static_cast<uint16_t>(whole_ + other),
       frac_
     };
+  }
+
+  constexpr bool operator<(const fixed_point32_t other) const {
+    if (whole_ != other.whole_) {
+      return whole_ < other.whole_;
+    }
+
+    return frac_ < other.frac_;
+  }
+
+  constexpr bool operator==(const fixed_point32_t other) const {
+    return whole_ == other.whole_ and frac_ == other.frac_;
+  }
+
+  constexpr bool operator>(const fixed_point32_t other) const {
+    if (whole_ != other.whole_) {
+      return whole_ > other.whole_;
+    }
+
+    return frac_ > other.frac_;
   }
 
   constexpr fixed_point32_t operator*(const fixed_point32_t other) const {

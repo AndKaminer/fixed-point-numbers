@@ -40,6 +40,10 @@ struct fixed_point32_t {
     return fixed_point32_t<fractional_digits>{num_ + other.num_};
   }
 
+  constexpr fixed_point32_t operator-(const fixed_point32_t other) const {
+    return fixed_point32_t<fractional_digits>{num_ - other.num_};
+  }
+
   constexpr fixed_point32_t operator*(const fixed_point32_t other) const {
     return fixed_point32_t<fractional_digits>{static_cast<uint32_t>((static_cast<uint64_t>(num_) * static_cast<uint64_t>(other.num_)) / pow10(fractional_digits))};
   }
