@@ -21,5 +21,10 @@ add_executable(vector_benchmark cpp/benchmarks/vector.cpp)
 target_include_directories(vector_benchmark PRIVATE cpp/include)
 target_link_libraries(vector_benchmark PRIVATE benchmark::benchmark)
 
+add_executable(subtraction_benchmark cpp/benchmarks/subtraction.cpp)
+target_include_directories(subtraction_benchmark PRIVATE cpp/include)
+target_link_libraries(subtraction_benchmark PRIVATE benchmark::benchmark)
+
+
 add_executable(main cpp/main.cpp)
 target_include_directories(main PRIVATE cpp/include)
